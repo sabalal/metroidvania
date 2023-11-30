@@ -1,0 +1,94 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4j1an5svhvsd"]
+
+[ext_resource type="Texture2D" uid="uid://bb3dv1xx1bv8l" path="res://assets/sprites/heart_full.png" id="1_aq4s2"]
+[ext_resource type="Script" path="res://scenes/ui.gd" id="1_v0jrt"]
+[ext_resource type="Texture2D" uid="uid://dpkyn8kmlafo5" path="res://assets/sprites/heart_depleted.png" id="2_tyqq6"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_v0jrt")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Label" type="Label" parent="Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Health" type="Node" parent="Control/MarginContainer/Label"]
+
+[node name="Full_1" type="Sprite2D" parent="Control/MarginContainer/Label/Health"]
+position = Vector2(32, 32)
+texture = ExtResource("1_aq4s2")
+
+[node name="Depleted_1" type="Sprite2D" parent="Control/MarginContainer/Label/Health"]
+position = Vector2(32, 32)
+texture = ExtResource("2_tyqq6")
+
+[node name="Full_2" type="Sprite2D" parent="Control/MarginContainer/Label/Health"]
+position = Vector2(66, 32)
+texture = ExtResource("1_aq4s2")
+
+[node name="Depleted_2" type="Sprite2D" parent="Control/MarginContainer/Label/Health"]
+position = Vector2(66, 32)
+texture = ExtResource("2_tyqq6")
+
+[node name="Full_3" type="Sprite2D" parent="Control/MarginContainer/Label/Health"]
+position = Vector2(100, 32)
+texture = ExtResource("1_aq4s2")
+
+[node name="Depleted_3" type="Sprite2D" parent="Control/MarginContainer/Label/Health"]
+position = Vector2(100, 32)
+texture = ExtResource("2_tyqq6")
+
+[node name="DeathScreen" type="Panel" parent="Control/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer/DeathScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "You died"
+
+[node name="Button" type="Button" parent="Control/MarginContainer/DeathScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = 25.0
+offset_right = 6.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Respawn"
+
+[connection signal="pressed" from="Control/MarginContainer/DeathScreen/Button" to="." method="_on_button_pressed"]

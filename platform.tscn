@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1852hxv5v5yy"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ce75j"]
+friction = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_liaee"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wqsiy"]
+size = Vector2(2, 2)
+
+[node name="Platform" type="StaticBody2D"]
+position = Vector2(224, 582)
+scale = Vector2(159.125, 15.4928)
+physics_material_override = SubResource("PhysicsMaterial_ce75j")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+position = Vector2(-2.98023e-08, -2.98023e-08)
+scale = Vector2(2, 2)
+mesh = SubResource("BoxMesh_liaee")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wqsiy")
