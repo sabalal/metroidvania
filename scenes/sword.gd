@@ -16,5 +16,6 @@ func _on_body_entered(body):
 	# Tween the sword
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "position", self.position - Vector2(0, 75), 0.2)
+	$AudioStreamPlayer2D.play()
 	# Remove the sword from the world
 	tween.tween_callback(self.queue_free)

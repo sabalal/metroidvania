@@ -1,21 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://bcvpafpp8n2o4"]
+[gd_scene load_steps=5 format=3 uid="uid://bcvpafpp8n2o4"]
 
 [ext_resource type="Texture2D" uid="uid://crcumgnhrr1p5" path="res://assets/sprites/Sword.png" id="1_jxyg2"]
 [ext_resource type="Script" path="res://scenes/sword.gd" id="1_o4l7e"]
+[ext_resource type="AudioStream" uid="uid://bgvgxfm7uimwa" path="res://audio/pick_up.mp3" id="3_nwum7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d3u10"]
-size = Vector2(31.5, 34)
+size = Vector2(6.75, 39.2861)
 
 [node name="Sword" type="Area2D"]
 collision_mask = 17
 script = ExtResource("1_o4l7e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.21242, 0.687392)
+rotation = 0.798801
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_d3u10")
 
 [node name="Sword" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
 texture = ExtResource("1_jxyg2")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_nwum7")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

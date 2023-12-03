@@ -1,14 +1,19 @@
 extends CharacterBody2D
 
 
-const SPEED = 200.0
-const JUMP_VELOCITY = -600.0
+@export var SPEED = 200.0
+@export var JUMP_VELOCITY = -600.0
 var health = 3
 var isAlive = true
 var hasSword = false
 var swordPosition
 var isAttacking = false
 var attackAnimationCounter = 0
+var fell_down = false
+
+# Positions of all collectibles and enemies
+var collectibles = []
+var enemies = []
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -22,12 +27,15 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var start_position = transform
 
-@onready var collectibles = $"../Collectibles"
-@onready var enemies = $"../Enemies"
-
 func _ready():
 	death_screen.hide()
 	swordPosition = $"../Sword".transform
+	
+	for collectible in $"../Collectibles".get_children():
+		collectibles.append(collectible.transform)
+		
+	for enemy in $"../Enemies".get_children():
+		enemies.append(enemy.transform)
 
 func _physics_process(delta):
 	# Attack
@@ -84,10 +92,16 @@ func disable_controls():
 	ap.play("death")
 	velocity.x = 0
 	death_screen.show()
+	$Death.play()
+	
+func _on_death_finished():
+	if fell_down:
+		$Death2.play()
 	
 func hurt():
 	# Update player UI
 	healthUI.get_child(health * 2).hide()
+	$Ooh.play()
 
 func respawn():
 	# Hide the death screen
@@ -103,6 +117,10 @@ func respawn():
 	get_parent().add_child(sword)
 	sword.transform = swordPosition
 	hasSword = false
+	# Re initialize collectibles and enemies
+	init_collectibles()
+	init_enemies()
+	fell_down = false
 
 func replenish_health():
 	health = 3
@@ -113,6 +131,7 @@ func replenish_health():
 
 func attack():
 	if not isAttacking:
+		$Attack.play()
 		isAttacking = true
 		$AttackTimer.start()
 		if attackAnimationCounter == 0:
@@ -124,12 +143,30 @@ func attack():
 
 func _on_death_trigger_body_entered(body):
 	body.disable_controls()
+	fell_down = true
 
 func _on_attack_timer_timeout():
 	isAttacking = false
 
 func init_collectibles():
-	pass
+	
+	# Wipe all existing collectibles (if any)
+	for collectible in $"../Collectibles".get_children():
+		collectible.queue_free()
+	
+	# Re init all of the collectibles
+	for collectible_position in collectibles:
+		var collectible = preload("res://scenes/health_potion.tscn").instantiate()
+		get_parent().add_child(collectible)
+		collectible.transform = collectible_position
 
 func init_enemies():
-	pass
+	# Wipe all existing enemies (if any)
+	for enemy in $"../Enemies".get_children():
+		enemy.queue_free()
+	
+	# Re init all of the enemies
+	for enemy_position in enemies:
+		var enemy = preload("res://scenes/enemy.tscn").instantiate()
+		get_parent().add_child(enemy)
+		enemy.transform = enemy_position

@@ -45,6 +45,7 @@ attack={
 2d_physics/layer_3="hitbox"
 2d_physics/layer_4="hurtbox"
 2d_physics/layer_5="player"
+2d_physics/layer_6="platform_edge"
 
 [rendering]
 

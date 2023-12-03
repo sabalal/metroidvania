@@ -26,8 +26,9 @@ func _physics_process(delta):
 		move_and_slide()
 
 func _on_change_direction_body_entered(body):
-	dir = -1 * dir
-	sprite.flip_h = not sprite.flip_h
+	pass
+	# body.dir = -1 * body.dir
+	# body.sprite.flip_h = not body.sprite.flip_h
 
 
 func _on_player_detection_body_entered(body):
@@ -60,3 +61,10 @@ func _on_damage_timer_timeout():
 	is_taking_damage = false
 	if is_alive:
 		ap.play("walk")
+	else:
+		queue_free()
+
+func _on_player_detection_area_entered(area: Area2D):
+	if area.get_collision_layer_value(6):
+		dir = -1 * dir
+		sprite.flip_h = not sprite.flip_h
